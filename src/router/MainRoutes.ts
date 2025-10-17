@@ -1,79 +1,76 @@
 const MainRoutes = {
-    path: '/main',
-    meta: {
-        requiresAuth: true
+  path: '/main',
+  meta: {
+    requiresAuth: true
+  },
+  redirect: '/main',
+  component: () => import('@/layouts/full/FullLayout.vue'),
+  children: [
+    // =============================
+    // DASHBOARD
+    // =============================
+    {
+      name: 'Dashboard',
+      path: '/',
+      component: () => import('@/views/dashboard/index.vue'),
+      meta: { title: 'Dashboard' }
     },
-    redirect: '/main',
-    component: () => import('@/layouts/full/FullLayout.vue'),
-    children: [
-        {
-            name: 'Dashboard',
-            path: '/',
-            component: () => import('@/views/dashboard/index.vue')
-        },
-        {
-            name: 'Analytical',
-            path: '/dashboards/analytical',
-            component: () => import('@/views/dashboard/Analytical.vue')
-        },
-        {
-            name: 'eCommerce',
-            path: '/dashboards/ecommerce',
-            component: () => import('@/views/dashboard/eCommerce.vue')
-        },
-        // Front Pages
-        {
-            name: 'Homepage',
-            path: '/front-page/homepage',
-            component: () => import('@/views/front-pages/Homepage.vue')
-        },
-        {
-            name: 'About Us',
-            path: '/front-page/about-us',
-            component: () => import('@/views/front-pages/AboutUs.vue')
-        },
-        {
-            name: 'Blog',
-            path: '/front-page/blog',
-            component: () => import('@/views/front-pages/Blog.vue')
-        },
-        {
-            name: 'Contact Us',
-            path: '/front-page/contact-us',
-            component: () => import('@/views/front-pages/ContactUs.vue')
-        },
-        {
-            name: 'Portfolio',
-            path: '/front-page/portfolio',
-            component: () => import('@/views/front-pages/Portfolio.vue')
-        },
-        {
-            name: 'Pricing',
-            path: '/front-page/pricing',
-            component: () => import('@/views/front-pages/Pricing.vue')
-        },
-        // UI Components
-        {
-            name: 'Typography',
-            path: '/ui/typography',
-            component: () => import('@/views/components/Typography.vue')
-        },
-        {
-            name: 'Shadow',
-            path: '/ui/shadow',
-            component: () => import('@/views/components/Shadow.vue')
-        },
-        {
-            name: 'Icons',
-            path: '/icons',
-            component: () => import('@/views/pages/Icons.vue')
-        },
-        {
-            name: 'Starter',
-            path: '/sample-page',
-            component: () => import('@/views/pages/SamplePage.vue')
-        }
-    ]
-};
 
-export default MainRoutes;
+    // =============================
+    // MANAJEMEN PENGGUNA
+    // =============================
+    {
+      name: 'Daftar Pengguna',
+      path: '/managemen-pengguna/daftar-pengguna',
+      component: () => import('@/views/managemen-pengguna/DaftarPengguna.vue'),
+      meta: { title: 'Daftar Pengguna', parent: 'Manajemen Pengguna' }
+    },
+    {
+      name: 'Pengajuan Kata Sandi',
+      path: '/managemen-pengguna/pengajuan-kata-sandi',
+      component: () => import('@/views/managemen-pengguna/PengajuanKataSandi.vue'),
+      meta: { title: 'Pengajuan Kata Sandi', parent: 'Manajemen Pengguna' }
+    },
+    {
+      name: 'Log Aktivitas',
+      path: '/managemen-pengguna/log-aktivitas',
+      component: () => import('@/views/managemen-pengguna/LogAktivitas.vue'),
+      meta: { title: 'Log Aktivitas', parent: 'Manajemen Pengguna' }
+    },
+
+    // =============================
+    // MANAJEMEN PROYEK
+    // =============================
+    {
+      name: 'Modul Juknis',
+      path: '/managemen-proyek/modul-juknis',
+      component: () => import('@/views/managemen-proyek/ModulJuknis.vue'),
+      meta: { title: 'Modul Juknis', parent: 'Manajemen Proyek' }
+    },
+    {
+      name: 'Modul POC',
+      path: '/managemen-proyek/modul-poc',
+      component: () => import('@/views/managemen-proyek/ModulPoc.vue'),
+      meta: { title: 'Modul POC', parent: 'Manajemen Proyek' }
+    },
+    {
+      name: 'Informasi Broadcast',
+      path: '/managemen-proyek/informasi-broadcast',
+      component: () => import('@/views/managemen-proyek/InformasiBroadcast.vue'),
+      meta: { title: 'Informasi Broadcast', parent: 'Manajemen Proyek' }
+    },
+
+    // =============================
+    // FRONT PAGES (LAINNYA)
+    // =============================
+    {
+      name: 'Laporan',
+      path: '/laporan',
+      component: () => import('@/views/laporan/Laporan.vue'),
+      meta: { title: 'Laporan' }
+    },
+
+  ]
+}
+
+export default MainRoutes

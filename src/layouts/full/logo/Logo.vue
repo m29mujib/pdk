@@ -1,6 +1,6 @@
 <script setup>
-import LogoIcon from "@/assets/images/logos/logocapsmini.svg";
-import Logo from "@/assets/images/logos/logocaps.svg";
+import LogoIcon from "@/assets/images/logos/logok.svg";
+import Logo from "@/assets/images/logos/logok.svg";
 
 </script>
 <template>
