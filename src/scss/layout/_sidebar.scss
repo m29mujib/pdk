@@ -1,0 +1,323 @@
+/*This is for the logo*/
+.leftSidebar {
+    box-shadow: none !important;
+    border-right: 1px solid rgb(var(--v-theme-borderColor));
+    top: 0 !important;
+    transition:
+        width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.3s ease;
+    z-index: 1000;
+
+    .logo {
+        padding-left: 7px;
+        transition: all 0.3s ease;
+        height: auto;
+        display: flex;
+        align-items: center;
+    }
+
+    .mini-icon {
+        display: none;
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+    }
+
+    .mini-text {
+        display: block;
+        max-height: 40px;
+        object-fit: contain;
+    }
+
+    .v-navigation-drawer__content {
+        overflow-x: hidden !important;
+
+        .side-profile {
+            position: absolute;
+            top: -15px;
+            right: 0;
+            max-height: 100px;
+        }
+        .side-profile-text {
+            max-width: 100px;
+        }
+    }
+
+    // Mini sidebar styles
+    &.mini-sidebar {
+        .logo {
+            width: 40px;
+            overflow: hidden;
+            padding-left: 0;
+            transition: all 0.3s ease;
+        }
+
+        .mini-icon {
+            display: block;
+            transition: opacity 0.2s ease;
+        }
+
+        .mini-text {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .v-list {
+            padding: 14px !important;
+            transition: padding 0.3s ease;
+
+            .v-list-item {
+                justify-content: center;
+                min-height: 48px;
+                transition: all 0.2s ease;
+
+                .v-list-item__prepend {
+                    margin-inline-end: 0;
+                    transition: margin 0.2s ease;
+                }
+
+                .v-list-item-title {
+                    display: none;
+                    opacity: 0;
+                    transition: opacity 0.2s ease 0.1s;
+                    white-space: nowrap;
+                }
+
+                .v-list-item__append {
+                    display: none;
+                    opacity: 0;
+                    transition: opacity 0.2s ease 0.1s;
+                }
+            }
+
+            .smallCap {
+                display: none;
+                opacity: 0;
+                transition: opacity 0.2s ease 0.1s;
+            }
+        }
+
+        // Show content on hover with smooth transitions
+        &:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+            z-index: 1001;
+            width: 270px !important;
+            position: fixed !important;
+
+            .logo {
+                width: 100%;
+                padding-left: 7px;
+            }
+
+            .mini-icon {
+                display: none;
+                opacity: 0;
+            }
+
+            .mini-text {
+                display: block;
+                opacity: 1;
+            }
+
+            .v-list {
+                padding: 24px !important;
+
+                .v-list-item {
+                    justify-content: flex-start;
+
+                    .v-list-item__prepend {
+                        margin-inline-end: 13px;
+                    }
+
+                    .v-list-item-title {
+                        display: block;
+                        opacity: 1;
+                        overflow: visible;
+                    }
+
+                    .v-list-item__append {
+                        display: block;
+                        opacity: 1;
+                    }
+                }
+
+                .smallCap {
+                    display: block;
+                    opacity: 1;
+                }
+            }
+
+            .v-list .v-list-group__items,
+            .hide-menu {
+                opacity: 1;
+            }
+
+            // Ensure content doesn't get cut off
+            .v-navigation-drawer__content {
+                overflow: visible !important;
+            }
+        }
+
+        // Smooth transition for navigation drawer expansion
+        .v-navigation-drawer__content {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    }
+}
+
+/*This is for the Vertical sidebar*/
+.scrollnavbar {
+    height: calc(100vh - 170px);
+
+    .userbottom {
+        position: fixed;
+        bottom: 0px;
+        width: 100%;
+    }
+
+    .smallCap {
+        padding: 3px 0px !important;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-top: 24px;
+        color: rgb(var(--v-theme-textPrimary));
+
+        &:first-child {
+            margin-top: 0 !important;
+        }
+    }
+
+    /*General Menu css*/
+    .v-list-group__items .v-list-item,
+    .v-list-item {
+        border-radius: $border-radius-root;
+        padding-inline-start: calc(12px + var(--indent-padding) / 10) !important;
+
+        margin: 0 0 2px;
+
+        &:hover {
+            background: rgb(var(--v-theme-lightprimary));
+
+            color: rgb(var(--v-theme-primary));
+        }
+
+        .v-list-item__prepend {
+            margin-inline-end: 13px;
+        }
+
+        .v-list-item__append {
+            font-size: 0.875rem;
+
+            .v-icon {
+                margin-inline-start: 13px;
+            }
+        }
+
+        .v-list-item-title {
+            font-size: 1rem;
+        }
+    }
+
+    .v-list {
+        color: rgb(var(--v-theme-textPrimary));
+
+        > .v-list-item.v-list-item--active,
+        .v-list-item--active > .v-list-item__overlay {
+            background: rgb(var(--v-theme-primary));
+            color: white;
+        }
+
+        > .v-list-group {
+            position: relative;
+
+            > .v-list-item--active,
+            > .v-list-item--active:hover {
+                background: rgb(var(--v-theme-primary));
+                color: white;
+            }
+
+            .v-list-group__items .v-list-item.v-list-item--active,
+            .v-list-group__items .v-list-item.v-list-item--active > .v-list-item__overlay {
+                background: transparent;
+                color: rgb(var(--v-theme-primary));
+            }
+        }
+
+        .v-list-group--open {
+            .mdi-chevron-right {
+                transform: rotate(90deg);
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 1170px) {
+    // Legacy mini-sidebar support - now handled by the .mini-sidebar class above
+}
+
+// Additional styles for sidebar toggle button
+.sidebar-toggle-btn {
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: rgba(var(--v-theme-primary), 0.1) !important;
+        color: rgb(var(--v-theme-primary)) !important;
+        transform: scale(1.05);
+    }
+}
+
+// Ensure main content doesn't shift when sidebar is hovered in mini mode
+.v-main {
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Override Vuetify's default expand-on-hover behavior
+.v-navigation-drawer--expand-on-hover {
+    &:not(:hover) {
+        overflow: hidden !important;
+
+        .v-navigation-drawer__content {
+            overflow: hidden !important;
+        }
+    }
+
+    // Fixed logout section at bottom
+    .logout-section {
+        background-color: rgb(var(--v-theme-surface));
+        margin-top: auto;
+        flex-shrink: 0;
+
+        .v-list-item {
+            border-radius: 8px;
+            margin-bottom: 0;
+
+            &:hover {
+                background-color: rgba(var(--v-theme-error), 0.1);
+
+                .v-list-item-title {
+                    color: rgb(var(--v-theme-error));
+                }
+
+                .iconClass {
+                    color: rgb(var(--v-theme-error));
+                }
+            }
+        }
+    }
+
+    &.mini-sidebar {
+        .logout-section {
+            .v-list {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .leftSidebar {
+        top: 0 !important;
+    }
+}
