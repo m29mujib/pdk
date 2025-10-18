@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-[#f6f8fb] p-8">
     <div class="mb-6">
-      <h1 class="text-2xl font-bold text-[#03386B]">Manajemen Pengguna</h1>
+      <h1>Manajemen Pengguna</h1>
       <p class="text-[#55565A]">Kelola akun pengguna, role, dan izin</p>
     </div>
 
