@@ -125,45 +125,87 @@ const pieOption = ref<ECOption>({
 </script>
 
 <template>
-    <div class="pl-2">
-            <h1>Dashboard</h1>
-            <p>Selamat Datang Di Dashboard Sistem Managemen</p>
-    </div>
+  <div class="pl-2">
+    <h1 class="font-bold text-2xl">
+      Dashboard
+    </h1>
+    <p>Selamat Datang Di Dashboard Sistem Managemen</p>
+  </div>
   <v-row>
     <v-col cols="12" lg="4">
-      <v-card elevation="10" style="display: flex; justify-content: center; align-items: center; padding: 10px 20px;">
-        <v-icon color="error" size="36">mdi-account</v-icon>
-        <v-card-text>
-          <h5 class="title font-weight-medium mb-2 text-h6 ">
-            Notifikasi Pengajuan PKS
-          </h5>
-          <p class="mb-3 text-grey-darken-1" style="font-size: 30px; font-weight: bold;">24</p>
-        </v-card-text>
-        <v-icon color="primary" size="36">mdi-cog</v-icon>
+      <v-card elevation="0"
+        class="flex justify-between items-center bg-white border border-gray-200 rounded-2xl px-6 py-4 shadow-sm w-full md:w-[380px]">
+        <!-- Kiri -->
+        <div class="flex items-start gap-3">
+          <!-- Icon lingkaran merah -->
+          <div
+            class="w-12 h-12 flex justify-center items-center rounded-full bg-red-500 border-[3px] border-yellow-300 shadow-sm">
+            <v-icon color="black" size="30">mdi-bell-outline</v-icon>
+          </div>
+          <!-- Teks -->
+          <div>
+            <p class="text-[15px] font-medium text-gray-900 leading-tight" style="font-weight:500;">
+              Notifikasi Pengajuan PKS
+            </p>
+            <p class="text-[28px] font-bold text-black mt-1 leading-none" style="font-weight: bold;">24</p>
+          </div>
+        </div>
+
+        <!-- Kanan: icon dalam kotak biru -->
+        <div class="p-[10px] flex justify-center items-center rounded-[12px] bg-[#66b3ff] shadow-lg">
+          <v-icon color="white" size="45">mdi-file-document-outline</v-icon>
+        </div>
+      </v-card>
+
+    </v-col>
+    <v-col cols="12" lg="4">
+      <v-card elevation="0"
+        class="flex justify-between items-center bg-white border border-gray-200 rounded-2xl px-6 py-4 shadow-sm w-full md:w-[380px]">
+        <!-- Kiri -->
+        <div class="flex items-start gap-3">
+          <!-- Icon lingkaran merah -->
+          <div
+            class="w-12 h-12 flex justify-center items-center rounded-full bg-red-500 border-[3px] border-yellow-300 shadow-sm">
+            <v-icon color="black" size="30">mdi-bell-outline</v-icon>
+          </div>
+          <!-- Teks -->
+          <div>
+            <p class="text-[15px] font-medium text-gray-900 leading-tight" style="font-weight:500;">
+              Notifikasi Pengajuan Juknis
+            </p>
+            <p class="text-[28px] font-bold text-black mt-1 leading-none" style="font-weight: bold;">33</p>
+          </div>
+        </div>
+
+        <!-- Kanan: icon dalam kotak biru -->
+       <div class="p-[10px] flex justify-center items-center rounded-[12px] bg-[#66b3ff] shadow-lg">
+          <v-icon color="white" size="45">mdi-clipboard-list-outline</v-icon>
+        </div>
       </v-card>
     </v-col>
     <v-col cols="12" lg="4">
-      <v-card elevation="10" style="display: flex; justify-content: center; align-items: center; padding: 10px 20px;">
-        <v-icon color="error" size="36">mdi-account</v-icon>
-        <v-card-text>
-          <h5 class="title font-weight-medium mb-2 text-h6 ">
-            Notifikasi Pengajuan Juknis
-          </h5>
-          <p class="mb-3 text-grey-darken-1" style="font-size: 30px; font-weight: bold;">33</p>
-        </v-card-text>
-        <v-icon color="warning" size="36">mdi-cog</v-icon>
-      </v-card>
-    </v-col>
-    <v-col cols="12" lg="4">
-      <v-card elevation="10" style="display: flex; justify-content: center; align-items: center; padding: 10px 20px;">
-        <v-icon color="error" size="36">mdi-account</v-icon>
-        <v-card-text>
-          <h5 class="title font-weight-medium mb-2 text-h6 ">
-            Notifikasi Pengajuan POC
-          </h5>
-          <p class="mb-3 text-grey-darken-1" style="font-size: 30px; font-weight: bold;">12</p>
-        </v-card-text>
-        <v-icon color="error" size="36">mdi-cog</v-icon>
+      <v-card elevation="0"
+        class="flex justify-between items-center bg-white border border-gray-200 rounded-2xl px-6 py-4 shadow-sm w-full md:w-[380px]">
+        <!-- Kiri -->
+        <div class="flex items-start gap-3">
+          <!-- Icon lingkaran merah -->
+          <div
+            class="w-12 h-12 flex justify-center items-center rounded-full bg-red-500 border-[3px] border-yellow-300 shadow-sm">
+            <v-icon color="black" size="30">mdi-bell-outline</v-icon>
+          </div>
+          <!-- Teks -->
+          <div>
+            <p class="text-[15px] font-medium text-gray-900 leading-tight" style="font-weight:500;">
+              Notifikasi Pengajuan POC
+            </p>
+            <p class="text-[28px] font-bold text-black mt-1 leading-none" style="font-weight: bold;">12</p>
+          </div>
+        </div>
+
+        <!-- Kanan: icon dalam kotak biru -->
+        <div class="p-[10px] flex justify-center items-center rounded-[12px] bg-[#66b3ff] shadow-lg">
+          <v-icon color="white" size="45">mdi-card-account-details-outline</v-icon>
+        </div>
       </v-card>
     </v-col>
   </v-row>
@@ -203,7 +245,7 @@ const pieOption = ref<ECOption>({
       <v-card elevation="10" class="pa-4">
         <h5 class="text-h6 mb-3">Statistik Pengajuan Project</h5>
         <p class="text-p4 mb-4">Statistik Pengajuan Project Bulanan</p>
-        <v-chart :option="pieOption" style="height: 350px; width: 100%;"/>
+        <v-chart :option="pieOption" style="height: 350px; width: 100%;" />
       </v-card>
     </v-col>
   </v-row>

@@ -2,5 +2,258 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Kamu bisa tambah style global di bawah sini */
+@layer base {
 
+    /* Global font dan warna dasar */
+    body {
+        font-family: 'Inter', sans-serif;
+        font-weight: 400;
+        color: #333;
+        background-color: #f9fafb;
+    }
+
+    /* Heading default */
+    h1 {
+        font-weight: 700;
+        font-size: 2rem;
+        line-height: 1.2;
+        color: #0d47a1;
+    }
+
+    h2 {
+        font-weight: 600;
+        font-size: 1.75rem;
+        line-height: 1.3;
+        color: #1565c0;
+    }
+
+    h3 {
+        font-weight: 600;
+        font-size: 1.5rem;
+        line-height: 1.3;
+    }
+
+    h4 {
+        font-weight: 500;
+        font-size: 1.25rem;
+        line-height: 1.4;
+    }
+
+    h5 {
+        font-weight: 500;
+        font-size: 1.125rem;
+        line-height: 1.4;
+    }
+
+    h6 {
+        font-weight: 500;
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+
+    /* Paragraf dan teks kecil */
+    p {
+        font-weight: 400;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 0.75rem;
+    }
+
+    small {
+        font-size: 0.85rem;
+        color: #666;
+    }
+
+    /* Link umum */
+    a {
+        color: #1565c0;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .sidebar-header {
+        color: #000000 !important;
+        /* abu-abu lembut (mirip text-gray-400) */
+        font-size: 0.75rem !important;
+        /* ukuran kecil (12px) */
+        font-weight: 600 !important;
+        /* semi-bold */
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        /* sedikit spasi antar huruf */
+        margin-left: 4px !important;
+    }
+
+    /* Item menu utama di sidebar */
+    .v-list-item {
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        /* jarak ikon dan teks */
+        flex-direction: row !important;
+        border-radius: 8px !important;
+        transition: all 0.25s ease !important;
+        color: #333 !important;
+        min-height: 42px !important;
+        padding: 6px 8px !important;
+        /* padding kiri-kanan rapat */
+    }
+
+    /* Hover pada item sidebar */
+    .v-list-item:hover {
+        background-color: #e8f0fe !important;
+        color: #03386B !important;
+    }
+
+    /* Item aktif (warna biru tua) */
+    .v-list-item--active {
+        background-color: #03386B !important;
+        color: #fff !important;
+        font-weight: 600 !important;
+    }
+
+    /* Ikon pada item aktif */
+    .v-list-item--active .v-icon {
+        color: #fff !important;
+    }
+
+    /* Submenu (indent + garis vertikal kiri) */
+    .v-list-group__items {
+        margin-left: 16px !important;
+        border-left: 1.5px solid #e5e7eb;
+        padding-left: 12px !important;
+        transition: all 0.25s ease-in-out !important;
+    }
+
+    /* Sub-item di dalam grup */
+    .v-list-group__items .v-list-item {
+        position: relative;
+        padding-left: 0px !important;
+        margin-bottom: 4px !important;
+    }
+
+    /* Hilangkan bullet default */
+    .v-list-group__items .v-list-item::before {
+        content: none !important;
+    }
+
+    /* Hover pada submenu */
+    .v-list-group__items .v-list-item:hover {
+        background-color: #f0f7ff !important;
+        color: #03386B !important;
+    }
+
+    /* Submenu aktif (biru lembut) */
+    .v-list-group__items .v-list-item--active {
+        background-color: #e8f0fe !important;
+        color: #03386B !important;
+        font-weight: 500 !important;
+        border-radius: 6px !important;
+    }
+
+    /* Sembunyikan submenu di mode mini */
+    .mini-sidebar .v-list-group__items {
+        display: none !important;
+    }
+
+    /* Hapus garis vertikal di mode mini */
+    .mini-sidebar .v-list-group__items::before {
+        display: none !important;
+    }
+
+    /* Pusatkan ikon di mode mini */
+    .mini-sidebar .v-list-item {
+        justify-content: center !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        gap: 0 !important;
+    }
+
+    /* Hover di mode mini */
+    .mini-sidebar .v-list-item:hover {
+        background-color: #e8f0fe !important;
+        color: #03386B !important;
+    }
+
+    /* Aktif di mode mini */
+    .mini-sidebar .v-list-item--active {
+        background-color: #03386B !important;
+        color: #fff !important;
+    }
+
+    /* Hilangkan garis submenu di mode mini */
+    .mini-sidebar .v-list-group__items .v-list-item {
+        border-left: none !important;
+    }
+
+    /* Ukuran teks dan tata letak judul menu */
+    .v-list-item-title {
+        font-size: 0.84rem !important;
+        /* 13.5px agar muat satu baris */
+        font-weight: 500 !important;
+        white-space: nowrap !important;
+        /* tetap satu baris */
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        line-height: 1.3 !important;
+        color: inherit !important;
+        transition: color 0.2s ease !important;
+    }
+
+    /* Sembunyikan teks di sidebar mini */
+    .mini-sidebar .v-list-item-title {
+        display: none !important;
+    }
+
+    /* Transisi lebar sidebar */
+    .v-navigation-drawer {
+        transition: width 0.3s ease-in-out !important;
+    }
+
+    /* Transisi hover item dan submenu */
+    .v-list-item,
+    .v-list-group__items {
+        transition: all 0.25s ease-in-out !important;
+    }
+
+    /* Animasi muncul submenu */
+    .v-list-group__items-enter-active,
+    .v-list-group__items-leave-active {
+        transition: all 0.25s ease;
+    }
+
+    .v-list-group__items-enter-from,
+    .v-list-group__items-leave-to {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    .v-list-group__items-enter-to,
+    .v-list-group__items-leave-from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .leftSidebar:not(.mini-sidebar) .v-list-item__content {
+        flex: 1 1 auto !important;
+        /* biar bisa meluas */
+        min-width: 0 !important;
+        /* izinkan shrink tanpa potong teks */
+        overflow: visible !important;
+        /* biar tidak terpotong */
+    }
+
+    .leftSidebar:not(.mini-sidebar) .v-list-item-title {
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        overflow: visible !important;
+        white-space: nowrap !important;
+        text-overflow: unset !important;
+    }
+
+
+}
