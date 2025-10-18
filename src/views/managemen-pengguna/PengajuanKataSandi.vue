@@ -2,15 +2,16 @@
   <div class="min-h-screen bg-[#f6f8fb] p-8">
     <!-- Page Header -->
     <div class="mb-6">
-      <h1 class="text-2xl font-semibold text-gray-800">Pengajuan Lupa Kata Sandi Pengguna</h1>
-      <p class="text-gray-500">Pengelolaan pengajuan lupa kata sandi user</p>
+      <h1 class="text-2xl font-semibold text-gray-800">
+        Pengajuan Lupa Kata Sandi Pengguna
+      </h1>
+      <p class="text-gray-500">
+        Pengelolaan pengajuan lupa kata sandi user
+      </p>
     </div>
 
     <!-- Main Card -->
     <div class="bg-[white] rounded-lg shadow-sm border border-gray-100 px-6 py-6">
-      <!-- Header Card -->
-     
-
       <!-- Search & Filter -->
       <div class="flex gap-2 mb-4">
         <a-input
@@ -21,68 +22,100 @@
           allow-clear
         >
           <template #prefix>
-        <!-- ✅ Gunakan SearchOutlined langsung -->
             <SearchOutlined style="color: #333;" />
           </template>
         </a-input>
+
         <a-button class="flex justify-center items-center">
-            <template #icon>
-              <Icon icon="ri:filter-line" style="font-size: 16px; margin-right: 4px;" />
-            </template>
-            Filter
+          <template #icon>
+            <Icon
+              icon="ri:filter-line"
+              style="font-size: 16px; margin-right: 4px;"
+            />
+          </template>
+          Filter
         </a-button>
       </div>
 
-      <!-- Table -->
-      <a-table :columns="columns" :data-source="data" row-key="key" :pagination="{ pageSize: 5 }">
-    <template #bodyCell="{ column, record }">
-      <template v-if="column.key === 'actions'">
-        <a-space>
-          <template v-for="btn in actions" :key="btn.action">
-            <a-tooltip :title="btn.tooltip">
-              <a-button
-                :style="{
-                  backgroundColor: btn.color,
-                  border: 'none',
-                  color: 'white',
-                  borderRadius: '6px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }"
-                @click="handleAction(btn.action, record)"
-              >
-                <template #icon>
-                  <Icon :icon="btn.icon" style="margin-right: 4px;"/>
-                </template>
-                {{ btn.label }}
-              </a-button>
-            </a-tooltip>
+      <!-- ✅ Table tanpa pagination default -->
+      <a-table
+        :columns="columns"
+        :data-source="paginatedData"
+        row-key="key"
+        :pagination="false"
+      >
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.key === 'actions'">
+            <a-space>
+              <template v-for="btn in actions" :key="btn.action">
+                <a-tooltip :title="btn.tooltip">
+                  <a-button
+                    :style="{
+                      backgroundColor: btn.color,
+                      border: 'none',
+                      color: 'white',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }"
+                    @click="handleAction(btn.action, record)"
+                  >
+                    <template #icon>
+                      <Icon :icon="btn.icon" style="margin-right: 4px;" />
+                    </template>
+                    {{ btn.label }}
+                  </a-button>
+                </a-tooltip>
+              </template>
+            </a-space>
           </template>
-        </a-space>
-      </template>
-    </template>
-  </a-table>
+        </template>
+      </a-table>
 
-      <!-- Custom Pagination Info -->
+      <!-- ✅ Custom Pagination (tetap ditampilkan) -->
       <div class="flex justify-between items-center mt-4">
+        <!-- Info kiri -->
         <div class="text-sm text-gray-500">
-          Menampilkan
-          {{ displayedCount }} dari {{ filteredData.length }} pengguna
+          Menampilkan {{ displayedCount }} dari {{ filteredData.length }} pengguna
         </div>
 
-        <a-pagination
-          v-model:current="pagination.current"
-          :page-size="pagination.pageSize"
-          :total="filteredData.length"
-          :show-size-changer="false"
-          :show-less-items="true"
-          :locale="paginationLocale"
-        />
+        <!-- Pagination tengah + tombol kanan -->
+        <div class="flex items-center gap-3">
+          <a-pagination
+            v-model:current="pagination.current"
+            :page-size="pagination.pageSize"
+            :total="filteredData.length"
+            :show-size-changer="false"
+            :show-less-items="true"
+            size="small"
+          />
+
+          <!-- Tombol kanan -->
+          <div class="flex items-center gap-2 ml-2">
+            <a-button
+              type="default"
+              size="small"
+              :disabled="pagination.current === 1"
+              @click="goPrev"
+            >
+              Sebelumnya
+            </a-button>
+            <a-button
+              type="default"
+              size="small"
+              :disabled="pagination.current === totalPages"
+              @click="goNext"
+            >
+              Selanjutnya
+            </a-button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
+
 
 <script setup lang="ts">
 import { ref, computed } from "vue"
@@ -150,6 +183,16 @@ const pagination = ref({
   current: 1,
   pageSize: 5,
 })
+const totalPages = computed(() =>
+  Math.ceil(filteredData.value.length / pagination.value.pageSize)
+)
+const goPrev = () => {
+  if (pagination.value.current > 1) pagination.value.current--
+}
+
+const goNext = () => {
+  if (pagination.value.current < totalPages.value) pagination.value.current++
+}
 
 // Custom locale untuk tombol
 const paginationLocale = {

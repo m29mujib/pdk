@@ -26,6 +26,12 @@ const MainRoutes = {
       meta: { title: 'Daftar Pengguna', parent: 'Manajemen Pengguna' }
     },
     {
+      name: 'Tambah Daftar Pengguna',
+      path: '/managemen-pengguna/daftar-pengguna/tambah-daftar-pengguna',
+      component: () => import('@/views/managemen-pengguna/AddDialogDaftarPengguna.vue'),
+      meta: { title: 'Tambah Daftar Pengguna', parent: 'Managemen Pengguna / Daftar Pengguna' }
+    },
+    {
       name: 'Pengajuan Kata Sandi',
       path: '/managemen-pengguna/pengajuan-kata-sandi',
       component: () => import('@/views/managemen-pengguna/PengajuanKataSandi.vue'),
