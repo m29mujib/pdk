@@ -8,7 +8,7 @@
      <div class="bg-[white] rounded-lg shadow-sm border border-gray-100 px-6 py-6">
         <div class="flex justify-between items-center mb-4">
         <div>
-          <h1 class="text-[16px] font-bold text-[#03386B]">Riwayat Aktivitas</h1>
+          <h2 class="text-[16px] font-bold text-[#03386B]">Riwayat Aktivitas</h2>
           <p class="text-[16px] text-[#55565A]">Log aktivitas pengguna dalam sistem</p>
         </div>
       </div>

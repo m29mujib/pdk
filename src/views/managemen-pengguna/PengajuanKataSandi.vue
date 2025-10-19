@@ -2,10 +2,10 @@
   <div class="min-h-screen bg-[#f6f8fb] p-8">
     <!-- Page Header -->
     <div class="mb-6">
-      <h1 class="text-2xl font-semibold text-gray-800">
+      <h1 class="text-[24px] font-bold text-[#03386B]">
         Pengajuan Lupa Kata Sandi Pengguna
       </h1>
-      <p class="text-gray-500">
+      <p class="text-[#55565A] text-[16px]">
         Pengelolaan pengajuan lupa kata sandi user
       </p>
     </div>

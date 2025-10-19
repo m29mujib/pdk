@@ -1,13 +1,13 @@
 <template>
   <div class="mb-6">
-      <h1 class="text-2xl font-bold text-[#03386B]">Informasi Broadcast</h1>
-      <p class="text-[#55565A]">Kirim notifikasi dan pengumuman ke pengguna aplikasi mobile</p>
+      <h1 class="text-[24px] font-bold text-[#03386B]">Informasi Broadcast</h1>
+      <p class="text-[#55565A] text-[16px]">Kirim notifikasi dan pengumuman ke pengguna aplikasi mobile</p>
     </div>
   <div class="h-full w-[50%] bg-[#fff] px-6 py-8 rounded-lg shadow-md mb-6">
     <!-- Judul Section -->
     <div class="mb-6">
-      <h2 class="text-2xl font-bold text-[#03386B]">Kirim Broadcast Juknis</h2>
-      <p class="text-[#55565A]">
+      <h2 class="text-[24px] font-semibold text-[#03386B]">Kirim Broadcast Juknis</h2>
+      <p class="text-[#55565A] text-[16px]">
         Kirim informasi atau pengingat ke peserta Juknis
       </p>
     </div>
