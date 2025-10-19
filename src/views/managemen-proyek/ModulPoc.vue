@@ -1,7 +1,7 @@
 <template>
   <div class="h-full bg-[#f6f8fb] p-8 mb-6">
     <div class="mb-6">
-      <h1 class="text-2xl font-bold text-[#03386B]">Modul POC</h1>
+      <h1 class="text-[24px] font-bold text-[#03386B]">Modul POC</h1>
       <p class="text-[#55565A]">Kelola aktivitas POC (Prof Of Concept), penjadwalan, dan komunikasi </p>
     </div>
 
@@ -143,6 +143,7 @@
       </a-form-item>
     </a-form>
   </div>
+  <AddJadwalModal ref="jadwalModalRef" />
 </template>
 
 <script lang="ts" setup>
@@ -151,12 +152,7 @@ import type { ColumnsType } from "ant-design-vue/es/table"
 import { useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue';
 import { message } from 'ant-design-vue'
-// =====================
-// Interface User
-// =====================
-// =====================
-// Interface Baru
-// =====================
+import AddJadwalModal from './AddJadwalModal.vue'
 interface Jadwal {
   key: number
   judul: string
@@ -255,8 +251,9 @@ const handleEdit = (record: any) => {
 }
 const router = useRouter()
 const searchText = ref("")
+const jadwalModalRef = ref<InstanceType<typeof AddJadwalModal> | null>(null)
 const openModal = () => {
-  router.push({ name: 'Tambah Daftar Pengguna' }) // pakai name dari router
+  jadwalModalRef.value?.openModal()
 }
 
 // =====================

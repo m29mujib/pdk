@@ -1,7 +1,7 @@
 <template>
   <div class="h-full bg-[#f6f8fb] p-8 mb-6">
     <div class="mb-6">
-      <h1 class="text-2xl font-bold text-[#03386B]">Modul Juknis</h1>
+      <h1 class="text-[24px] font-bold text-[#03386B]">Modul Juknis</h1>
       <p class="text-[#55565A]">Kelola kewajiban juknis dan deadline</p>
     </div>
 
