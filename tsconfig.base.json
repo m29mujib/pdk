@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    // --- OUTPUT & MODULE SYSTEM ---
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+
+    // --- TYPE CHECK & COMPATIBILITY ---
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+
+    // --- MODERN TS 5.5+ ---
+    "verbatimModuleSyntax": true, // ✅ pengganti preserveValueImports
+
+    // --- PATH & IMPORT ALIAS ---
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
+    // --- TYPES ---
+    "types": ["vite/client", "node"]
+  }
+}

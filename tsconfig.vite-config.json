@@ -1,10 +1,7 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.node.json",
+  "extends": "./tsconfig.node-base.json",
   "include": ["vite.config.*"],
   "compilerOptions": {
-    "composite": true,
-    "allowJs": true,
-    "moduleResolution": "bundler",
     "types": ["vite/client"]
   }
 }
