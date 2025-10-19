@@ -126,10 +126,10 @@ const pieOption = ref<ECOption>({
 
 <template>
   <div class="pl-2">
-    <h1 class="font-bold text-2xl">
+    <h1 class="text-[24px] font-semibold text-[#03386B]">
       Dashboard
     </h1>
-    <p>Selamat Datang Di Dashboard Sistem Managemen</p>
+    <p class="text-[#55565A] text-[16px]">Selamat Datang Di Dashboard Sistem Managemen</p>
   </div>
   <v-row>
     <v-col cols="12" lg="4">
@@ -139,8 +139,8 @@ const pieOption = ref<ECOption>({
         <div class="flex items-start gap-3">
           <!-- Icon lingkaran merah -->
           <div
-            class="w-12 h-12 flex justify-center items-center rounded-full bg-red-500 border-[3px] border-yellow-300 shadow-sm">
-            <v-icon color="black" size="30">mdi-bell-outline</v-icon>
+            class="w-12 h-12 flex justify-center items-center rounded-full p-[5px] bg-[red] shadow-sm">
+            <v-icon color="white" size="20">mdi-bell-outline</v-icon>
           </div>
           <!-- Teks -->
           <div>
@@ -153,7 +153,7 @@ const pieOption = ref<ECOption>({
 
         <!-- Kanan: icon dalam kotak biru -->
         <div class="p-[10px] flex justify-center items-center rounded-[12px] bg-[#66b3ff] shadow-lg">
-          <v-icon color="white" size="45">mdi-file-document-outline</v-icon>
+          <v-icon color="white" size="40">mdi-file-outline</v-icon>
         </div>
       </v-card>
 
@@ -165,8 +165,8 @@ const pieOption = ref<ECOption>({
         <div class="flex items-start gap-3">
           <!-- Icon lingkaran merah -->
           <div
-            class="w-12 h-12 flex justify-center items-center rounded-full bg-red-500 border-[3px] border-yellow-300 shadow-sm">
-            <v-icon color="black" size="30">mdi-bell-outline</v-icon>
+            class="w-12 h-12 p-[5px] flex justify-center items-center rounded-full bg-[red] shadow-sm">
+            <v-icon color="white" size="20">mdi-bell-outline</v-icon>
           </div>
           <!-- Teks -->
           <div>
@@ -178,8 +178,8 @@ const pieOption = ref<ECOption>({
         </div>
 
         <!-- Kanan: icon dalam kotak biru -->
-       <div class="p-[10px] flex justify-center items-center rounded-[12px] bg-[#66b3ff] shadow-lg">
-          <v-icon color="white" size="45">mdi-clipboard-list-outline</v-icon>
+       <div class="p-[10px] flex justify-center items-center rounded-[12px] bg-[#FFD478] shadow-lg">
+          <v-icon color="white" size="40">mdi-clipboard-list-outline</v-icon>
         </div>
       </v-card>
     </v-col>
@@ -190,8 +190,8 @@ const pieOption = ref<ECOption>({
         <div class="flex items-start gap-3">
           <!-- Icon lingkaran merah -->
           <div
-            class="w-12 h-12 flex justify-center items-center rounded-full bg-red-500 border-[3px] border-yellow-300 shadow-sm">
-            <v-icon color="black" size="30">mdi-bell-outline</v-icon>
+            class="w-12 h-12 p-[5px] flex justify-center items-center rounded-full bg-[red] shadow-sm">
+            <v-icon color="white" size="20">mdi-bell-outline</v-icon>
           </div>
           <!-- Teks -->
           <div>
@@ -203,8 +203,8 @@ const pieOption = ref<ECOption>({
         </div>
 
         <!-- Kanan: icon dalam kotak biru -->
-        <div class="p-[10px] flex justify-center items-center rounded-[12px] bg-[#66b3ff] shadow-lg">
-          <v-icon color="white" size="45">mdi-card-account-details-outline</v-icon>
+        <div class="p-[10px] flex justify-center items-center rounded-[12px] bg-[#FF6C64] shadow-lg">
+          <v-icon color="white" size="40">mdi-card-account-details-outline</v-icon>
         </div>
       </v-card>
     </v-col>
