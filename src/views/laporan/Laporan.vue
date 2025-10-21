@@ -164,7 +164,7 @@ const pieOption = ref<ECOption>({
   </div>
  <v-row class="gap-1">
     <!-- Card 1 -->
-    <v-col cols="12" lg="3">
+    <v-col cols="12" lg="6">
       <v-card
         elevation="0"
         class="flex justify-between items-center bg-white border border-gray-200 rounded-4xl px-6 py-6 shadow-sm w-full h-[120px]"
@@ -179,25 +179,8 @@ const pieOption = ref<ECOption>({
       </v-card>
     </v-col>
 
-    <!-- Card 2 -->
-    <v-col cols="12" lg="3">
-      <v-card
-        elevation="0"
-        class="flex justify-between items-center bg-white border border-gray-200 rounded-xl px-6 py-6 shadow-sm w-full h-[120px]"
-      >
-        <div>
-          <p class="text-[26px] font-bold text-[#0a0a0a] leading-tight mb-[-5px]" style="font-weight: 600;">29 min</p>
-          <p class="text-[15px] text-[#0a0a0a] font-medium mb-[-5px]">Durasi rata-rata</p>
-          <p class="text-[13px] text-gray-500">Per pengguna</p>
-        </div>
-        <div class="p-[12px] flex justify-center items-center rounded-[12px] bg-[#d8f5d0]">
-          <v-icon color="#2e7d32" size="30">mdi-file-document-outline</v-icon>
-        </div>
-      </v-card>
-    </v-col>
-
     <!-- Card 3 -->
-    <v-col cols="12" lg="3">
+    <v-col cols="12" lg="6">
       <v-card
         elevation="0"
         class="flex justify-between items-center bg-white border border-gray-200 rounded-xl px-6 py-6 shadow-sm w-full h-[120px]"
@@ -214,21 +197,7 @@ const pieOption = ref<ECOption>({
     </v-col>
 
     <!-- Card 4 -->
-    <v-col cols="12" lg="3">
-      <v-card
-        elevation="0"
-        class="flex justify-between items-center bg-white border border-gray-200 rounded-xl px-6 py-6 shadow-sm w-full h-[120px]"
-      >
-        <div>
-          <p class="text-[26px] font-bold text-[#0a0a0a] leading-tight mb-[-5px]" style="font-weight: 600;">240</p>
-          <p class="text-[15px] text-[#0a0a0a] font-medium  mb-[-5px]">Permintaan POC</p>
-          <p class="text-[13px] text-gray-500">6 Bulan terakhir</p>
-        </div>
-        <div class="p-[12px] flex justify-center items-center rounded-[12px] bg-[#eaddff]">
-          <v-icon color="#8e24aa" size="30">mdi-bell-outline</v-icon>
-        </div>
-      </v-card>
-    </v-col>
+  
   </v-row>
   <v-row>
     <v-col cols="12" lg="6">
@@ -243,6 +212,20 @@ const pieOption = ref<ECOption>({
         <h5 class="text-h6 mb-3">Statistik Pengajuan Project</h5>
         <p class="text-p4 mb-4">Statistik Pengajuan Project Bulanan</p>
         <v-chart :option="pieOption" style="height: 350px; width: 100%;" />
+      </v-card>
+    </v-col>
+    <v-col cols="12" lg="6">
+      <v-card elevation="10" class="pa-4">
+        <h5 class="text-h6 mb-3">Statistik Pengajuan Project</h5>
+        <p class="text-p4 mb-4">Statistik Pengajuan Project Bulanan</p>
+        <v-chart :option="pieOption" style="height: 350px; width: 100%;" />
+      </v-card>
+    </v-col>
+    <v-col cols="12" lg="6">
+      <v-card elevation="10" class="pa-4">
+        <h5 class="text-h6 mb-3">Statistik Projek</h5>
+        <p class="text-p4 mb-4">Distribusi Juknis dan POC Projek</p>
+        <VChart :option="barOption" style="height: 350px; width: 100%;" />
       </v-card>
     </v-col>
   </v-row>

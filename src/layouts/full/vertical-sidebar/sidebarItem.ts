@@ -22,7 +22,7 @@ export interface menu {
 // SIDEBAR ITEMS (bagian utama)
 // =============================
 const sidebarItem: menu[] = [
-  { header: 'MENU' },
+  { header: 'M E N U' },
   {
     title: 'Dashboard',
     icon: LayoutDashboardIcon,
@@ -38,6 +38,7 @@ const sidebarItem: menu[] = [
       { title: 'Daftar Pengguna', to: '/managemen-pengguna/daftar-pengguna', external: false },
       { title: 'Pengajuan Kata Sandi', to: '/managemen-pengguna/pengajuan-kata-sandi', external: false },
       { title: 'Log Aktivitas', to: '/managemen-pengguna/log-aktivitas', external: false },
+      { title: 'Levelisasi Pengguna', to: '/managemen-pengguna/levelisasi-pengguna', external: false },
     ],
   },
   {
@@ -48,7 +49,7 @@ const sidebarItem: menu[] = [
     children: [
       { title: 'Modul Juknis', to: '/managemen-proyek/modul-juknis', external: false },
       { title: 'Modul POC', to: '/managemen-proyek/modul-poc', external: false },
-      { title: 'Informasi Broadcast', to: '/managemen-proyek/informasi-broadcast', external: false },
+      { title: 'Blasting Informasi', to: '/managemen-proyek/informasi-broadcast', external: false },
     ],
   },
   {
@@ -63,6 +64,7 @@ const sidebarItem: menu[] = [
 // FOOTER ITEMS (GENERAL section)
 // =============================
 export const footerItems: menu[] = [
+  { header: 'G E N E R A L'},
   {
     title: 'Pengaturan & Keamanan',
     icon: ShieldLockIcon,
@@ -72,7 +74,7 @@ export const footerItems: menu[] = [
   {
     title: 'Logout',
     icon: LogoutIcon,
-    to: '/auth/login',
+    to: '/login',
     external: false,
   },
 ]

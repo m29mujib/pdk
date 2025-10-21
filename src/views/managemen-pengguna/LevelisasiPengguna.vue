@@ -1,20 +1,20 @@
 <template>
   <div class="p-8">
-    <!-- 📘 Header -->
+    <!--  Header -->
     <div class="mb-6">
-      <h1 class="text-[24px] font-bold text-[#03386B]">Log Aktivitas Pengguna</h1>
+      <h1 class="text-[24px] font-bold text-[#03386B]">Levelisasi & Manajemen Role</h1>
       <p class="text-[#55565A] text-[16px]">
-        Pantau dan lacak semua aktivitas pengguna dalam sistem
+        kelola role dan level pengguna aplikasi mobile
       </p>
     </div>
 
-    <!-- 📋 Card Container -->
+    <!--  Card Container -->
     <div class="bg-[#fff] rounded-lg shadow-sm border border-gray-100 px-6 py-6">
-      <!-- 🔍 Search & Filter -->
+      <!--  Search & Filter -->
       <div class="flex gap-2 mb-4">
         <a-input
           v-model="searchText"
-          placeholder="Cari Aktivitas..."
+          placeholder="Cari..."
           class="custom-input"
           style="width: 240px; background-color: #eaeaea;"
           allow-clear
@@ -24,20 +24,6 @@
           </template>
         </a-input>
 
-        <a-select
-          v-model:value="selectedModule"
-          placeholder="Semua Modul"
-          class="custom-select-gray"
-          style="width: 180px; background-color: #eaeaea; border-radius: 6px;"
-          allow-clear
-        >
-          <a-select-option value="user">Manajemen Pengguna</a-select-option>
-          <a-select-option value="role">Manajemen Role</a-select-option>
-          <a-select-option value="ticket">Ticketing System</a-select-option>
-          <a-select-option value="survey">Monitoring Survei</a-select-option>
-          <a-select-option value="report">Laporan & Statistik</a-select-option>
-        </a-select>
-
         <a-button class="flex justify-center items-center">
           <template #icon>
             <Icon icon="ri:filter-line" style="font-size: 16px; margin-right: 4px;" />
@@ -46,7 +32,7 @@
         </a-button>
       </div>
 
-      <!-- 🧩 Reusable Editable Table -->
+      <!--  Reusable Editable Table -->
       <EditableTable
         :columns="columns"
         :data="filteredData"

@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen bg-[#f6f8fb] p-8">
-    <!-- Page Header -->
+  <div class="p-8">
+    <!-- 🧭 Header -->
     <div class="mb-6">
       <h1 class="text-[24px] font-bold text-[#03386B]">
         Pengajuan Lupa Kata Sandi Pengguna
@@ -10,13 +10,13 @@
       </p>
     </div>
 
-    <!-- Main Card -->
-    <div class="bg-[white] rounded-lg shadow-sm border border-gray-100 px-6 py-6">
-      <!-- Search & Filter -->
+    <!-- 🧩 Container -->
+    <div class="bg-[#fff] rounded-lg shadow-sm border border-gray-100 px-6 py-6">
+      <!-- 🔍 Search & Filter -->
       <div class="flex gap-2 mb-4">
         <a-input
-          v-model="searchText"
-          placeholder="Cari Users....."
+          v-model:value="searchText"
+          placeholder="Cari pengguna..."
           class="custom-input"
           style="width: 240px; background-color: #eaeaea;"
           allow-clear
@@ -37,92 +37,26 @@
         </a-button>
       </div>
 
-      <!-- ✅ Table tanpa pagination default -->
-      <a-table
+      <!-- 🧮 Reusable Table -->
+      <EditableTable
         :columns="columns"
-        :data-source="paginatedData"
+        :data="filteredData"
         row-key="key"
-        :pagination="false"
-      >
-        <template #bodyCell="{ column, record }">
-          <template v-if="column.key === 'actions'">
-            <a-space>
-              <template v-for="btn in actions" :key="btn.action">
-                <a-tooltip :title="btn.tooltip">
-                  <a-button
-                    :style="{
-                      backgroundColor: btn.color,
-                      border: 'none',
-                      color: 'white',
-                      borderRadius: '6px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }"
-                    @click="handleAction(btn.action, record)"
-                  >
-                    <template #icon>
-                      <Icon :icon="btn.icon" style="margin-right: 4px;" />
-                    </template>
-                    {{ btn.label }}
-                  </a-button>
-                </a-tooltip>
-              </template>
-            </a-space>
-          </template>
-        </template>
-      </a-table>
-
-      <!-- ✅ Custom Pagination (tetap ditampilkan) -->
-      <div class="flex justify-between items-center mt-4">
-        <!-- Info kiri -->
-        <div class="text-sm text-gray-500">
-          Menampilkan {{ displayedCount }} dari {{ filteredData.length }} pengguna
-        </div>
-
-        <!-- Pagination tengah + tombol kanan -->
-        <div class="flex items-center gap-3">
-          <a-pagination
-            v-model:current="pagination.current"
-            :page-size="pagination.pageSize"
-            :total="filteredData.length"
-            :show-size-changer="false"
-            :show-less-items="true"
-            size="small"
-          />
-
-          <!-- Tombol kanan -->
-          <div class="flex items-center gap-2 ml-2">
-            <a-button
-              type="default"
-              size="small"
-              :disabled="pagination.current === 1"
-              @click="goPrev"
-            >
-              Sebelumnya
-            </a-button>
-            <a-button
-              type="default"
-              size="small"
-              :disabled="pagination.current === totalPages"
-              @click="goNext"
-            >
-              Selanjutnya
-            </a-button>
-          </div>
-        </div>
-      </div>
+        :actions="tableActions"
+        @approve="(record) => onApprove(record as User)"
+        @reject="(record) => onReject(record as User)"
+      />
     </div>
   </div>
 </template>
 
-
 <script setup lang="ts">
 import { ref, computed } from "vue"
+import { SearchOutlined } from "@ant-design/icons-vue"
+import { Icon } from "@iconify/vue"
+import { message } from "ant-design-vue"
+import EditableTable from "@/components/tabel/EditableTable.vue"
 import type { ColumnsType } from "ant-design-vue/es/table"
-import { SearchOutlined } from '@ant-design/icons-vue'
-import { Icon } from '@iconify/vue';
-import { message } from 'ant-design-vue'
 
 interface User {
   key: number
@@ -133,7 +67,9 @@ interface User {
   terdaftar: string
 }
 
-// Dummy data
+/* =====================
+   📊 Dummy Data
+===================== */
 const data = ref<User[]>([
   { key: 1, name: "John Doe", email: "johndoe@gmail.com", role: "Administrator", dikirim: "2025-08-01", terdaftar: "2024-12-23" },
   { key: 2, name: "Fakih Lana", email: "fakihlana@gmail.com", role: "Administrator", dikirim: "2025-08-01", terdaftar: "2024-12-23" },
@@ -142,65 +78,15 @@ const data = ref<User[]>([
   { key: 5, name: "Satrio Hilmi", email: "satriohilmi@gmail.com", role: "Administrator", dikirim: "2025-08-01", terdaftar: "2024-12-23" },
   { key: 6, name: "Mujib", email: "mujib@gmail.com", role: "Administrator", dikirim: "2025-08-01", terdaftar: "2024-12-23" },
   { key: 7, name: "Mamang", email: "mamang@gmail.com", role: "Administrator", dikirim: "2025-08-01", terdaftar: "2024-12-23" },
-  { key: 8, name: "Anam", email: "kikigara@gmail.com", role: "Administrator", dikirim: "2025-08-01", terdaftar: "2024-12-23" },
-  { key: 9, name: "Dini", email: "maulkika@gmail.com", role: "Administrator", dikirim: "2025-08-01", terdaftar: "2024-12-23" },
-  { key: 10, name: "Dela", email: "satriohilmi@gmail.com", role: "Administrator", dikirim: "2025-08-01", terdaftar: "2024-12-23" },
+  { key: 8, name: "Anam", email: "anam@gmail.com", role: "Administrator", dikirim: "2025-08-01", terdaftar: "2024-12-23" },
+  { key: 9, name: "Dini", email: "dini@gmail.com", role: "Administrator", dikirim: "2025-08-01", terdaftar: "2024-12-23" },
+  { key: 10, name: "Dela", email: "dela@gmail.com", role: "Administrator", dikirim: "2025-08-01", terdaftar: "2024-12-23" },
 ])
 
+/* =====================
+   🔍 Search Logic
+===================== */
 const searchText = ref("")
-
-// Kolom tabel
-const columns: ColumnsType<User> = [
-  { title: "Nama", dataIndex: "name", key: "name" },
-  { title: "Email", dataIndex: "email", key: "email" },
-  { title: "Role", dataIndex: "role", key: "role" },
-  { title: "Dikirim", dataIndex: "dikirim", key: "dikirim" },
-  { title: "Terdaftar", dataIndex: "terdaftar", key: "terdaftar" },
-  { title: "Actions", key: "actions", align: "center", width: 60 },
-]
-
-const actions = [
-  {
-    action: 'approve',
-    label: 'Approve',
-    icon: 'ri:check-line',
-    color: '#2AC54F',
-    tooltip: 'Setujui data ini',
-    size: 'small'
-  },
-  {
-    action: 'reject',
-    label: 'Rejected',
-    icon: 'ri:close-line',
-    color: '#FF0000',
-    tooltip: 'Tolak data ini',
-    size: 'small'
-  }
-]
-
-// Pagination config
-const pagination = ref({
-  current: 1,
-  pageSize: 5,
-})
-const totalPages = computed(() =>
-  Math.ceil(filteredData.value.length / pagination.value.pageSize)
-)
-const goPrev = () => {
-  if (pagination.value.current > 1) pagination.value.current--
-}
-
-const goNext = () => {
-  if (pagination.value.current < totalPages.value) pagination.value.current++
-}
-
-// Custom locale untuk tombol
-const paginationLocale = {
-  prev_page: "Sebelumnya",
-  next_page: "Selanjutnya",
-}
-
-// Filter pencarian
 const filteredData = computed(() => {
   if (!searchText.value) return data.value
   return data.value.filter(
@@ -210,55 +96,96 @@ const filteredData = computed(() => {
   )
 })
 
-// Data per halaman
-const paginatedData = computed(() => {
-  const start = (pagination.value.current - 1) * pagination.value.pageSize
-  return filteredData.value.slice(start, start + pagination.value.pageSize)
-})
+/* =====================
+   🧱 Columns Definition
+===================== */
+const columns: ColumnsType<User> = [
+  { title: "Nama", dataIndex: "name", key: "name" },
+  { title: "Email", dataIndex: "email", key: "email" },
+  { title: "Role", dataIndex: "role", key: "role" },
+  { title: "Dikirim", dataIndex: "dikirim", key: "dikirim" },
+  { title: "Terdaftar", dataIndex: "terdaftar", key: "terdaftar" },
+  { title: "Operation", dataIndex: "operation", key: "operation", align: "center" },
+]
 
-// Hitung jumlah ditampilkan
-const displayedCount = computed(() => {
-  const end = Math.min(
-    pagination.value.current * pagination.value.pageSize,
-    filteredData.value.length
-  )
-  return end
-})
+/* =====================
+   ⚙️ Actions (untuk menu dropdown)
+===================== */
+const tableActions = [
+  {
+    key: 'approve',
+    label: 'Setujui',
+    icon: 'ri:check-line',
+    event: 'approve',
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '6px',                // jarak kecil antara ikon & teks
+      backgroundColor: '#22C55E',
+      color: '#fff',
+      border: 'none',
+      borderRadius: '6px',
+      fontWeight: '500',
+      fontSize: '13px',
+      height: '32px',
+      width: '110px',
+      cursor: 'pointer',
+      transition: 'all 0.2s ease',
+    },
+  },
+  {
+    key: 'reject',
+    label: 'Tolak',
+    icon: 'ri:close-line',
+    event: 'reject',
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '6px',
+      backgroundColor: '#EF4444',
+      color: '#fff',
+      border: 'none',
+      borderRadius: '6px',
+      fontWeight: '500',
+      fontSize: '13px',
+      height: '32px',
+      width: '110px',
+      cursor: 'pointer',
+      transition: 'all 0.2s ease',
+    },
+  },
+]
 
-// Action handlers
 
-const handleAction = (action: string, record: User) => {
-  if (action === 'approve') {
-    message.success(`✅ ${record.name} disetujui`)
-  } else if (action === 'reject') {
-    message.error(`❌ ${record.name} ditolak`)
-  }
+/* =====================
+   🧩 Event Handlers
+===================== */
+const onApprove = (record: User) => {
+  message.success(`✅ ${record.name} telah disetujui`)
+}
+
+const onReject = (record: User) => {
+  message.error(`❌ ${record.name} telah ditolak`)
 }
 </script>
 
 <style scoped>
+/* 🎨 Table Header */
 .ant-table-thead > tr > th {
   background-color: #fafafa !important;
   font-weight: 600;
   color: #333;
 }
-.ant-pagination {
-  margin: 0;
-}
-.ant-pagination-item-active {
-  border-color: #0d47a1 !important;
-}
-.ant-pagination-item-active a {
-  color: #0d47a1 !important;
-}
+
+/* 🎨 Input Placeholder */
 :deep(.custom-input input::placeholder) {
-  color: #111827; /* Tailwind: text-gray-900 */
+  color: #111827;
   padding: 10px;
   background-color: #eaeaea;
 }
 :deep(.custom-input.ant-input-affix-wrapper-focused .ant-input) {
   background-color: #eaeaea !important;
-  /* pertahankan abu-abu */
 }
-
 </style>

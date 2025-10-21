@@ -10,15 +10,10 @@ import RegisterForm from '@/components/auth/RegisterForm.vue';
                     <v-card rounded="md" elevation="10" class="px-sm-1 px-0 withbg mx-auto" max-width="500">
                         <v-card-item class="pa-sm-8">
                             <div class="d-flex justify-center py-4">
-                                <Logo />
+                               <img src="@/assets/images/logos/logok.svg" alt="logo" height="60" />
                             </div>
                             <RegisterForm />
-                            <h6 class="text-h6 text-muted font-weight-medium d-flex justify-center align-center mt-3">
-                                Already have an Account?
-                                <RouterLink to="/auth/login"
-                                    class="text-primary text-decoration-none text-body-1 opacity-1 font-weight-medium pl-2">
-                                    Sign In</RouterLink>
-                            </h6>
+                            <p>sudah punya akun? <router-link to="/login">Masuk</router-link></p>
                         </v-card-item>
                     </v-card>
                 </v-col>

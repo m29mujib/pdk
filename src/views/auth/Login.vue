@@ -9,11 +9,12 @@ const router = useRouter();
 
 // Check if user is already authenticated
 onMounted(() => {
-    const isAuthenticated = localStorage.getItem('isAuthenticated');
-    if (isAuthenticated === 'true') {
-        router.push('/');
-    }
-});
+  const isAuthenticated = localStorage.getItem('isAuthenticated')
+  if (isAuthenticated === 'true') {
+    router.push('/dashboard')
+  }
+})
+
 </script>
 <template>
     <div class="authentication">
@@ -23,26 +24,20 @@ onMounted(() => {
                     <v-card rounded="md" elevation="10" class="px-sm-1 px-0 withbg mx-auto" max-width="500">
                         <v-card-item class="pa-sm-8">
                             <div class="d-flex justify-center py-4">
-                                <Logo />
+                                <!-- <Logo /> -->
+                                 <img src="@/assets/images/logos/logok.svg" alt="logo" height="60" />
                             </div>
 
                             <div class="text-center mb-4">
-                                <h3 class="text-h4 font-weight-bold mb-2">Welcome Back!</h3>
+                                <h3 class="text-h4 font-weight-bold mb-2">Selamat Datang Kembali!</h3>
                                 <p class="text-subtitle-1 text-medium-emphasis">
-                                    Please sign in to your account
+                                    Silakan masuk ke akun Anda
                                 </p>
                             </div>
 
                             <LoginForm />
-
+                            <p>belum punya akun? <router-link to="/register">Daftar</router-link></p>
                             <v-divider class="my-4"></v-divider>
-
-                            <h6 class="text-h6 text-muted font-weight-medium d-flex justify-center align-center mt-3">
-                                New to Flexy?
-                                <RouterLink to="/auth/register"
-                                    class="text-primary text-decoration-none text-body-1 opacity-1 font-weight-medium pl-2">
-                                    Create an account</RouterLink>
-                            </h6>
                         </v-card-item>
                     </v-card>
                 </v-col>

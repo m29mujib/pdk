@@ -1,113 +1,69 @@
 <template>
-  <div class="min-h-screen bg-[#f6f8fb] p-8">
+  <div class="w-[100%] p-8">
+    <!--  Header -->
     <div class="mb-6">
       <h1 class="text-[24px] font-bold text-[#03386B]">Manajemen Pengguna</h1>
-      <p class="text-[#55565A] text-[16px]">Kelola akun pengguna, role, dan izin</p>
+      <p class="text-[#55565A] text-[16px]">
+        Kelola akun pengguna, role, dan izin
+      </p>
     </div>
 
-     <div class="bg-[white] rounded-lg shadow-sm border border-gray-100 px-6 py-6">
-        <div class="flex justify-between items-center mb-4">
-        <div>
-          <h2 class="text-[24px] font-semibold text-[#03386B]">Daftar Pengguna</h2>
-          <p class="text-sm text-[#55565A]">Lihat dan kelola semua pengguna terdaftar</p>
-        </div>
-        <button class="bg-[#03386B] hover:bg-[#1565c0] text-white px-3 py-3 rounded-md" @click="openModal">+ Tambah Pengguna</button>
+    <!--  Card Container -->
+    <div class="bg-[#fff] rounded-lg shadow-sm border border-gray-100 px-6 py-6">
+      <!--  Header Actions -->
+      <div class="flex justify-between items-center mb-4">
+        <div></div>
+        <button
+          class="bg-[#03386B] hover:bg-[#1565c0] text-white px-3 py-3 rounded-md"
+          @click="openModal"
+        >
+          + Tambah Pengguna
+        </button>
       </div>
 
-      <!-- Search & Filter -->
+      <!--  Search & Filter -->
       <div class="flex gap-2 mb-4">
         <a-input
-          v-model="searchText"
-          placeholder="Cari Users....."
+          v-model:value="searchText"
+          placeholder="Cari pengguna..."
           class="custom-input"
           style="width: 240px; background-color: #eaeaea;"
           allow-clear
         >
           <template #prefix>
-        <!-- ✅ Gunakan SearchOutlined langsung -->
             <SearchOutlined style="color: #333;" />
           </template>
         </a-input>
+
         <a-button class="flex justify-center items-center">
-            <template #icon>
-              <Icon icon="ri:filter-line" style="font-size: 16px; margin-right: 4px;" />
-            </template>
-            Filter
+          <template #icon>
+            <Icon icon="ri:filter-line" style="font-size: 16px; margin-right: 4px;" />
+          </template>
+          Filter
         </a-button>
       </div>
-         <a-table
-           :columns="columns"
-           :data-source="paginatedData"
-           bordered
-           row-key="key"
-           :pagination="false"
-         >
-          <template #bodyCell="{ column, record }">
-          <template v-if="column.key === 'actions'">
-            <a-dropdown placement="bottomRight">
-              <template #overlay>
-                <a-menu>
-                  <a-menu-item key="1" @click="onEdit(record)">✏️ Edit</a-menu-item>
-                  <a-menu-item key="2" danger @click="onDelete(record)">🗑️ Hapus</a-menu-item>
-                </a-menu>
-              </template>
-              <a-button type="text" class="text-lg">...</a-button>
-            </a-dropdown>
-          </template>
-        </template>
-         </a-table>
-         <!-- 📄 Pagination Info -->
-    <div class="flex justify-between items-center mt-4">
-      <!-- Info kiri -->
-      <div class="text-sm text-gray-500">
-        Menampilkan {{ displayedCount }} dari {{ filteredData.length }} pengguna
-      </div>
 
-      <!-- Pagination tengah + tombol kanan -->
-      <div class="flex items-center gap-3">
-        <a-pagination
-          v-model:current="pagination.current"
-          :page-size="pagination.pageSize"
-          :total="filteredData.length"
-          :show-size-changer="false"
-          :show-less-items="true"
-          size="small"
-        />
-
-        <!-- Tombol kanan -->
-        <div class="flex items-center gap-2 ml-2">
-          <a-button
-            type="default"
-            size="small"
-            :disabled="pagination.current === 1"
-            @click="goPrev"
-          >
-            Sebelumnya
-          </a-button>
-          <a-button
-            type="default"
-            size="small"
-            :disabled="pagination.current === totalPages"
-            @click="goNext"
-          >
-            Selanjutnya
-          </a-button>
-        </div>
-      </div>
-    </div>
+      <!--  Editable Table -->
+      <EditableTable
+        :columns="columns"
+        :data="filteredData"
+        row-key="key"
+        :actions="tableActions"
+        @disable="(record) => onDisable(record as User)"
+        @delete="(record) => onDelete(record as User)"
+      />
     </div>
   </div>
 </template>
 
-<script lang="ts" setup>
-import { computed, reactive, ref } from 'vue'
-import type { ColumnsType } from "ant-design-vue/es/table"
-import { useRouter } from 'vue-router'
+<script setup lang="ts">
+import { computed, ref } from 'vue'
 import { SearchOutlined } from '@ant-design/icons-vue'
-import { Icon } from '@iconify/vue';
-// =====================
-// Interface User
-// =====================
+import { Icon } from '@iconify/vue'
+import { useRouter } from 'vue-router'
+import EditableTable from '@/components/tabel/EditableTable.vue'
+import type { ColumnsType } from 'ant-design-vue/es/table'
+
 interface User {
   key: number
   name: string
@@ -117,124 +73,119 @@ interface User {
   registered: string
 }
 
-// =====================
-// Dummy Data
-// =====================
+
+const router = useRouter()
+const searchText = ref('')
+
+
 const data = ref<User[]>([
-  { key: 1, name: "John Doe", email: "johndoe@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 2, name: "Fakih Lana", email: "fakihlana@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 3, name: "Kiki Gara", email: "kikigara@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 4, name: "Maul Kika", email: "maulkika@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 5, name: "Satrio Hilmi", email: "satriohilmi@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 6, name: "Mujib", email: "mujib@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 7, name: "Mamang", email: "mamang@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 8, name: "Anam", email: "anam@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 9, name: "Dini", email: "dini@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 10, name: "Dela", email: "dela@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 1, name: "John Doe", email: "johndoe@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 2, name: "Fakih Lana", email: "fakihlana@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 3, name: "Kiki Gara", email: "kikigara@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 4, name: "Maul Kika", email: "maulkika@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 5, name: "Satrio Hilmi", email: "satriohilmi@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 6, name: "Mujib", email: "mujib@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 7, name: "Mamang", email: "mamang@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 8, name: "Anam", email: "anam@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 9, name: "Dini", email: "dini@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 10, name: "Dela", email: "dela@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 1, name: "John Doe", email: "johndoe@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 2, name: "Fakih Lana", email: "fakihlana@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 3, name: "Kiki Gara", email: "kikigara@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 4, name: "Maul Kika", email: "maulkika@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 5, name: "Satrio Hilmi", email: "satriohilmi@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 6, name: "Mujib", email: "mujib@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 7, name: "Mamang", email: "mamang@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 8, name: "Anam", email: "anam@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 9, name: "Dini", email: "dini@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 10, name: "Dela", email: "dela@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 1, name: "John Doe", email: "johndoe@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 2, name: "Fakih Lana", email: "fakihlana@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 3, name: "Kiki Gara", email: "kikigara@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 4, name: "Maul Kika", email: "maulkika@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 5, name: "Satrio Hilmi", email: "satriohilmi@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 6, name: "Mujib", email: "mujib@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 7, name: "Mamang", email: "mamang@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 8, name: "Anam", email: "anam@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 9, name: "Dini", email: "dini@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
-  { key: 10, name: "Dela", email: "dela@gmail.com", role: "Administrator", status: "Aktif", registered: "2024-12-23" },
+  { key: 1, name: 'John Doe', email: 'john@gmail.com', role: 'Admin', status: 'Aktif', registered: '2025-01-10' },
+  { key: 2, name: 'Fakih Lana', email: 'fakih@gmail.com', role: 'Admin', status: 'Aktif', registered: '2025-02-12' },
+  { key: 3, name: 'Kiki Gara', email: 'kiki@gmail.com', role: 'Admin', status: 'Nonaktif', registered: '2025-03-20' },
+  { key: 4, name: 'Anam', email: 'anam@gmail.com', role: 'Viewer', status: 'Aktif', registered: '2025-03-29' },
+  { key: 5, name: 'Mujib', email: 'mujib@gmail.com', role: 'Operator', status: 'Aktif', registered: '2025-04-05' },
 ])
 
 const columns: ColumnsType<User> = [
-  { title: "Nama", dataIndex: "name", key: "name" },
-  { title: "Email", dataIndex: "email", key: "email" },
-  { title: "Role", dataIndex: "role", key: "role" },
-  { title: "Status", dataIndex: "status", key: "status" },
-  { title: "Terdaftar", dataIndex: "registered", key: "registered" },
-  { title: "", key: "actions", align: "center", width: 60 },
+  { title: 'Nama', dataIndex: 'name', key: 'name', align: 'center' },
+  { title: 'Email', dataIndex: 'email', key: 'email', align: 'center' },
+  { title: 'Role', dataIndex: 'role', key: 'role', align: 'center' },
+  { title: 'Status', dataIndex: 'status', key: 'status', align: 'center' },
+  { title: 'Terdaftar', dataIndex: 'registered', key: 'registered', align: 'center' },
+  { title: 'Action', dataIndex: 'operation', key: 'operation', align: 'center' },
 ]
 
-const router = useRouter()
-const searchText = ref("")
-const openModal = () => {
-  router.push({ name: 'Tambah Daftar Pengguna' }) // pakai name dari router
-}
+const tableActions = [
+  { key: 'disable', label: 'Nonaktifkan', icon: 'mdi:account-off-outline', event: 'disable',
+       style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '6px',                // jarak kecil antara ikon & teks
+      backgroundColor: 'transparent',
+      color: '#000',
+      border: '1px solid #d1d5db',
+      borderRadius: '6px',
+      fontWeight: '500',
+      fontSize: '13px',
+      height: '32px',
+      width: '110px',
+      cursor: 'pointer',
+      transition: 'all 0.2s ease',
+    },
+  },
+  { key: 'delete', label: 'Hapus', icon: 'mdi:delete-outline', event: 'delete', danger: true,
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '6px',                // jarak kecil antara ikon & teks
+      backgroundColor: '#EF4444',
+      color: '#fff',
+      border: 'none',
+      borderRadius: '6px',
+      fontWeight: '500',
+      fontSize: '13px',
+      height: '32px',
+      width: '110px',
+      cursor: 'pointer',
+      transition: 'all 0.2s ease',
+    },
+  },
+]
 
-// =====================
-// Pagination Logic
-// =====================
-const pagination = ref({
-  current: 1,
-  pageSize: 5,
-})
 
-// Data terfilter (jika nanti mau search/filter)
-const filteredData = computed(() => data.value)
-
-// Total halaman
-const totalPages = computed(() =>
-  Math.ceil(filteredData.value.length / pagination.value.pageSize)
-)
-
-// Data per halaman
-const paginatedData = computed(() => {
-  const start = (pagination.value.current - 1) * pagination.value.pageSize
-  const end = start + pagination.value.pageSize
-  return filteredData.value.slice(start, end)
-})
-
-// Jumlah data yang tampil
-const displayedCount = computed(() => {
-  const end = Math.min(
-    pagination.value.current * pagination.value.pageSize,
-    filteredData.value.length
+const filteredData = computed(() => {
+  if (!searchText.value) return data.value
+  return data.value.filter((u) =>
+    Object.values(u).some((v) =>
+      String(v).toLowerCase().includes(searchText.value.toLowerCase())
+    )
   )
-  return end
 })
 
-// Navigasi
-const goPrev = () => {
-  if (pagination.value.current > 1) pagination.value.current--
+const openModal = () => {
+  router.push({ name: 'Tambah Daftar Pengguna' })
 }
 
-const goNext = () => {
-  if (pagination.value.current < totalPages.value) pagination.value.current++
-}
-
-const onEdit = (record: User) => {
-  console.log("Edit user:", record)
+const onDisable = (record: User) => {
+  console.log('User dinonaktifkan:', record.name)
 }
 
 const onDelete = (record: User) => {
-  console.log("Hapus user:", record)
+  console.log('User dihapus:', record.name)
 }
 </script>
 
 <style scoped>
-.ant-pagination {
-  margin: 0;
-}
 
 :deep(.custom-input input::placeholder) {
-  color: #111827; /* Tailwind: text-gray-900 */
+  color: #111827;
+  background-color: #eaeaea;
+}
+
+:deep(.custom-input.ant-input-affix-wrapper-focused .ant-input) {
+  background-color: #eaeaea !important;
+}
+
+:deep(.ant-select-selector) {
+  background-color: #fff !important;
+  border: 1px solid #d9d9d9 !important;
+  border-radius: 6px !important;
+  height: 28px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px !important;
+}
+
+:deep(.ant-select-selection-item) {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: #000 !important;
+}
+:deep(.custom-input input::placeholder) {
+  color: #111827; 
   padding: 10px;
   background-color: #eaeaea;
 }

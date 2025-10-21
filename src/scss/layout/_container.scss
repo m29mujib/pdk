@@ -22,19 +22,105 @@ html {
 .cursor-pointer {
     cursor: pointer;
 }
-.page-wrapper {
-    min-height: calc(100vh - 100px);
-    padding: 24px;
-    padding-bottom: 30px;
+// .page-wrapper {
+//     min-height: calc(100vh - 100px);
+//     padding: 24px;
+//     padding-bottom: 30px;
 
-    @media screen and (max-width:600px){
-        padding: 10px;
-    }
+//     @media screen and (max-width:600px){
+//         padding: 10px;
+//     }
+// }
+// .maxWidth {
+//     max-width: 1200px;
+//     margin: 0 auto;
+// }
+
+.page-wrapper {
+  min-height: calc(100vh - 100px);
+  padding: 24px;
+  padding-bottom: 30px;
+  transition: all 0.2s ease-in-out;
 }
+
+/* Kontainer utama agar konten tidak terlalu melebar di layar besar */
 .maxWidth {
-    max-width: 1200px;
-    margin: 0 auto;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 1rem;
 }
+
+/* Tablet Landscape */
+@media screen and (max-width: 1024px) {
+  .page-wrapper {
+    padding: 20px;
+  }
+  .maxWidth {
+    max-width: 95%;
+  }
+}
+
+/* Tablet Portrait */
+@media screen and (max-width: 768px) {
+  .page-wrapper {
+    padding: 16px;
+  }
+  .maxWidth {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+  h1, h2, h3 {
+    font-size: 90%;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 600px) {
+  .page-wrapper {
+    padding: 10px;
+  }
+  .maxWidth {
+    padding: 0 8px;
+  }
+  h1, h2, h3 {
+    font-size: 85%;
+  }
+  .ant-btn {
+    font-size: 13px !important;
+    padding: 4px 8px !important;
+  }
+  .ant-card {
+    margin-bottom: 12px;
+  }
+}
+
+/* ✅ Layar besar (monitor ultrawide, TV LED 4K, dsb.) */
+@media screen and (min-width: 1400px) {
+  .maxWidth {
+    max-width: 1400px;
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  .maxWidth {
+    max-width: 1600px;
+  }
+}
+
+/* ✅ Layar super besar (TV 4K+) */
+@media screen and (min-width: 2200px) {
+  .maxWidth {
+    max-width: 1800px;
+  }
+
+  body, h1, h2, h3, p, button {
+    font-size: 1.1rem;
+  }
+}
+
+
 $sizes: (
     'display-1': 44px,
     'display-2': 40px,

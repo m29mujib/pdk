@@ -18,7 +18,7 @@ const checkbox = ref(true);
             <v-text-field variant="outlined" type="password"  hide-details color="primary"></v-text-field>
         </v-col>
         <v-col cols="12" >
-            <v-btn to="/" color="primary" size="large" block   flat>Sign up</v-btn>
+            <v-btn to="/" color="primary" size="large" block  flat>Sign up</v-btn>
         </v-col>
     </v-row>
 </template>

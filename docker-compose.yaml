@@ -1,0 +1,16 @@
+version: '2.2'
+
+services:
+  lp-frontend-pdk:
+    container_name: lp-frontend-pdk
+    dns:
+      - 8.8.8.8
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9007:9007"
+    env_file:
+      - .env
+    environment:
+      - PORT=9007

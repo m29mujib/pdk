@@ -1,9 +1,9 @@
 const MainRoutes = {
-  path: '/main',
+  path: '/',
   meta: {
     requiresAuth: true
   },
-  redirect: '/main',
+  redirect: '/dashboard',
   component: () => import('@/layouts/full/FullLayout.vue'),
   children: [
     // =============================
@@ -11,7 +11,7 @@ const MainRoutes = {
     // =============================
     {
       name: 'Dashboard',
-      path: '/',
+      path: 'dashboard',
       component: () => import('@/views/dashboard/index.vue'),
       meta: { title: 'Dashboard' }
     },
@@ -42,6 +42,12 @@ const MainRoutes = {
       path: '/managemen-pengguna/log-aktivitas',
       component: () => import('@/views/managemen-pengguna/LogAktivitas.vue'),
       meta: { title: 'Log Aktivitas', parent: 'Manajemen Pengguna' }
+    },
+    {
+      name: 'Levelisasi Pengguna',
+      path: '/managemen-pengguna/levelisasi-pengguna',
+      component: () => import('@/views/managemen-pengguna/LevelisasiPengguna.vue'),
+      meta: { title: 'Levelisasi Pengguna', parent: 'Manajemen Pengguna' }
     },
 
     // =============================
@@ -74,6 +80,12 @@ const MainRoutes = {
       path: '/laporan',
       component: () => import('@/views/laporan/Laporan.vue'),
       meta: { title: 'Laporan' }
+    },
+    {
+      name: 'Pengaturan & Keamanan',
+      path: '/pengaturan-keamanan',
+      component: () => import('@/views/pengaturan/Pengaturan.vue'),
+      meta: { title: 'Pengaturan' }
     },
 
   ]

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { UserIcon, MailIcon, ListCheckIcon, ChevronDownIcon } from 'vue-tabler-icons'
 
 const user = ref({
@@ -7,6 +8,20 @@ const user = ref({
   role: 'Super Administrator',
   avatar: '@/assets/images/users/user-1.jpg'
 })
+
+const router = useRouter()
+
+const handleLogout = async () => {
+  // Bersihkan semua data autentikasi
+  localStorage.clear()
+  sessionStorage.clear()
+
+  // Tunggu sejenak supaya guard membaca state terbaru
+  await new Promise((resolve) => setTimeout(resolve, 100))
+
+  // Arahkan ke login
+  router.replace('/login')
+}
 </script>
 
 <template>
@@ -54,7 +69,7 @@ const user = ref({
       </v-list>
 
       <div class="pt-4 pb-4 px-5 text-center">
-        <v-btn to="/auth/login" color="primary" variant="outlined" block>Logout</v-btn>
+        <v-btn color="primary" variant="outlined" block @click="handleLogout">Logout</v-btn>
       </div>
     </v-sheet>
   </v-menu>

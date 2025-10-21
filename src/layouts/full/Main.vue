@@ -4,14 +4,11 @@ import Logo from './logo/Logo.vue';
 import NavGroup from './vertical-sidebar/NavGroup/index.vue';
 import NavItem from './vertical-sidebar/NavItem/index.vue';
 import sidebarItems, { footerItems } from './vertical-sidebar/sidebarItem'
-
-// Icon Imports
 import { Menu2Icon, MenuIcon } from 'vue-tabler-icons';
-// dropdown imports
-import NotificationDD from './vertical-header/NotificationDD.vue';
 import ProfileDD from './vertical-header/ProfileDD.vue';
 import NavCollapse from './vertical-sidebar/NavCollapse/NavCollapse.vue';
 import { useRoute } from 'vue-router';
+import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 
 const footerMenu = shallowRef(footerItems)
 const sidebarMenu = shallowRef(sidebarItems);
@@ -30,12 +27,41 @@ const breadcrumb = computed(() => {
 const toggleSidebar = () => {
   miniSidebar.value = !miniSidebar.value;
 };
+const hoverTimeout = ref<NodeJS.Timeout | null>(null);
+const handleSidebarHover = (isHovering: boolean) => {
+  // Jika sedang di mode mini
+  if (miniSidebar.value) {
+    if (isHovering) {
+      // Buka sidebar dengan sedikit delay agar terasa smooth
+      hoverTimeout.value = setTimeout(() => {
+        miniSidebar.value = false;
+      }, 150);
+    } else {
+      // Tutup sidebar saat mouse keluar
+      if (hoverTimeout.value) clearTimeout(hoverTimeout.value);
+      hoverTimeout.value = setTimeout(() => {
+        miniSidebar.value = true;
+      }, 200);
+    }
+  }
+};
 </script> m
 
 <template>
   <!------Sidebar-------->
-  <v-navigation-drawer left elevation="0" app class="leftSidebar" :class="{ 'mini-sidebar': miniSidebar }"
-    :width="miniSidebar ? 80 : 290" :expand-on-hover="miniSidebar" :permanent="true" v-model="sDrawer">
+  <v-navigation-drawer
+  left
+  elevation="0"
+  app
+  class="leftSidebar"
+  :class="{ 'mini-sidebar': miniSidebar }"
+  :width="miniSidebar ? 80 : 290"
+  :expand-on-hover="false"
+  :permanent="true"
+  v-model="sDrawer"
+  @mouseenter="handleSidebarHover(true)"
+  @mouseleave="handleSidebarHover(false)"
+>
 
     <!-- Sidebar Content Container -->
     <div class="d-flex flex-column h-100">
@@ -45,7 +71,7 @@ const toggleSidebar = () => {
           <Logo />
         </div>
         <div style="margin-left: 5px; margin-top: 1px;" v-if="!miniSidebar">
-          <p class="text-warning" style="font-weight: bold;">Managemen</p>
+          <p class="text-warning" style="font-weight: bold;">Manajemen</p>
           <p class="text-[#02386A]" style="font-weight: bold; margin-top: -18px;">Pemanfaatan Data</p>
         </div>
       </div>
@@ -75,15 +101,28 @@ const toggleSidebar = () => {
       <!---Fixed Logout Section at Bottom -->
       <!-- ---------------------------------------------- -->
       <div class="logout-section border-t border-gray-200 mt-auto pt-2">
-        <v-list class="px-6 py-3">
-          <p class="sidebar-header text-xs font-semibold tracking-wider mb-2">GENERAL</p>
-
+        <v-list class="px-6">
           <!-- Loop semua item footer -->
-          <template v-for="(item, i) in footerMenu" :key="i">
-            <NavItem :item="item" class="leftPadding mb-1" />
+          <template v-for="(item, i) in footerMenu">
+            <!-- Render header hanya sebagai teks -->
+            <NavGroup
+              :item="item"
+              v-if="item.header"
+              :key="item.title"
+            >
+              {{ item.header }}
+            </NavGroup>
+
+            <!-- Render item navigasi normal -->
+            <NavItem
+              v-else
+              :item="item"
+              class="leftPadding mb-1 hover:bg-transparent"
+            />
           </template>
         </v-list>
-      </div>
+     </div>
+
     </div>
 
   </v-navigation-drawer>
